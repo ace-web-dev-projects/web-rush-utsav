@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { NavLink, Navigate, Outlet, useNavigate } from 'react-router-dom'
 import BrandMark from '../components/BrandMark.jsx'
 import { adminApi, ADMIN_TOKEN_KEY } from '../api.js'
-import './Home.css'
+import './Admin.css'
 
 function AdminHome() {
   const navigate = useNavigate()
@@ -31,8 +31,8 @@ function AdminHome() {
 
   if (isCheckingSession) {
     return (
-      <main className="home-loading" aria-live="polite">
-        <span className="home-loading__spinner" aria-hidden="true" />
+      <main className="admin-loading" aria-live="polite">
+        <span className="admin-loading__spinner" aria-hidden="true" />
         <p>Checking administrator session…</p>
       </main>
     )
@@ -41,19 +41,25 @@ function AdminHome() {
   if (!admin) return <Navigate to="/admin/login" replace />
 
   return (
-    <main className="home-page">
-      <header className="home-header">
+    <main className="admin-page">
+      <header className="admin-header">
         <BrandMark compact />
-        <button className="home-header__signout" type="button" onClick={handleSignOut}>
-          Sign out
-        </button>
+        <div className="admin-header__account">
+          <span>{admin.username}</span>
+          <button className="admin-header__signout" type="button" onClick={handleSignOut}>
+            Sign out
+          </button>
+        </div>
       </header>
-      <section className="home-welcome">
-        <div className="eyebrow"><span className="eyebrow__dot" /> ADMIN SPACE</div>
-        <h1>Welcome, {admin.username}.</h1>
-        <p>Your Web Rush admin panel is ready. Event management components will be added here.</p>
-      </section>
-      <footer className="home-footer">WEB RUSH <span>•</span> ADMIN PORTAL</footer>
+      <nav className="admin-nav" aria-label="Admin pages">
+        <NavLink to="/admin" end className={({ isActive }) => `admin-nav__link${isActive ? ' is-active' : ''}`}>
+          Control
+        </NavLink>
+        <NavLink to="/admin/teams" className={({ isActive }) => `admin-nav__link${isActive ? ' is-active' : ''}`}>
+          Teams
+        </NavLink>
+      </nav>
+      <section className="admin-content"><Outlet /></section>
     </main>
   )
 }

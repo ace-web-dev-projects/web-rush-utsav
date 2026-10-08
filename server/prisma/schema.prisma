@@ -25,6 +25,7 @@ model Team {
   name         String
   teamCode     String   @unique
   passwordHash String?
+  points       Int      @default(0)
   createdAt    DateTime @default(now())
 }
 
