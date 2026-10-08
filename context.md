@@ -6,7 +6,7 @@ This file summarizes the repository as it exists now. Treat source code, schema,
 
 Web Rush is intended to become a game-like web event application with a frontend, backend, database, leaderboard, and admin functionality. The current repository is an early scaffold:
 
-- The React client is still the stock Vite starter experience, with a counter and Vite/React links.
+- The React client now provides a team login screen and a simple authenticated home placeholder.
 - The server now has an Express authentication API. There are no game/event, leaderboard, or admin endpoints yet.
 - The only database model currently defined is `Team`.
 - There is no implemented event flow, gameplay, leaderboard, or admin interface in the source currently present.
@@ -64,12 +64,14 @@ Dependency lockfiles record exact transitive package versions and integrity hash
 ## Frontend details
 
 - Stack: JavaScript ES modules, React, React DOM, Vite, and the Vite React plugin.
-- `client/src/main.jsx` imports global CSS and renders `App` inside React `StrictMode`.
-- `client/src/App.jsx` imports `hero.png`, React and Vite logos, and `App.css`. It tracks a numeric counter with `useState`; clicking the button increments it. Other content links to React/Vite documentation and communities.
-- `client/src/App.css` and `client/src/index.css` contain the template's responsive layout, design tokens, and system color-scheme handling.
+- `client/src/main.jsx` imports `theme.css` and renders `App` inside React `StrictMode`.
+- `client/src/App.jsx` defines routes for `/` and `/login`. `client/src/pages/Home.jsx` checks the stored JWT with `/auth/me`; without a valid session, it redirects to `/login`. With a valid session, it shows the team name/code placeholder and a sign-out action.
+- `client/src/pages/Login.jsx` posts team code and password to `/auth/login`, stores the returned JWT in local storage, and navigates to `/` after a successful login. There is intentionally no registration UI because organizers will provision teams.
+- `client/src/theme.css` contains global reset rules and named design tokens (`--color-background`, `--color-text`, `--color-brand`, `--font-body`, etc.) so the team can change the palette centrally. Page-specific styles live beside each page in `pages/`.
+- `client/src/components/BrandMark.jsx` and `FormField.jsx` are small shared UI components. `client/src/api.js` configures Axios; `VITE_API_URL` can override its default `http://localhost:3000/api` base URL.
 - `client/vite.config.js` only configures the React plugin. There is no API proxy or environment-specific client configuration here.
 - `axios` and `react-router-dom` are declared dependencies but are not currently used by the source files. Their presence does not establish routing or API behavior.
-- `client/index.html` sets the document title to `client`; this is starter configuration.
+- `client/index.html` sets the Web Rush team portal title and theme color.
 
 Useful commands, run from `client/`:
 

@@ -1,0 +1,118 @@
+.home-page {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  padding: 32px max(24px, calc((100vw - var(--page-width)) / 2));
+  background:
+    radial-gradient(ellipse at 80% 12%, rgb(240 100 53 / 10%), transparent 34%),
+    var(--color-background);
+}
+
+.home-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand-mark--compact .brand-mark__icon {
+  width: 34px;
+  height: 34px;
+}
+
+.home-header__signout {
+  padding: 9px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.home-header__signout:hover {
+  border-color: var(--color-brand);
+  color: var(--color-brand-strong);
+}
+
+.home-welcome {
+  width: min(100%, 760px);
+  margin: auto;
+  padding: 64px 0;
+}
+
+.home-welcome h1 {
+  margin: 18px 0 12px;
+  font-family: var(--font-display);
+  font-size: clamp(42px, 9vw, 76px);
+  letter-spacing: -0.07em;
+  line-height: 1;
+}
+
+.home-welcome > p {
+  max-width: 480px;
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.home-welcome__team-code {
+  display: inline-grid;
+  gap: 4px;
+  margin-top: 34px;
+  padding: 14px 18px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-medium);
+  background: var(--color-surface);
+}
+
+.home-welcome__team-code span {
+  color: var(--color-text-muted);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+.home-welcome__team-code strong {
+  font-size: 14px;
+  letter-spacing: 0.04em;
+}
+
+.home-footer {
+  color: var(--color-text-muted);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+.home-footer span {
+  padding: 0 5px;
+  color: var(--color-brand);
+}
+
+.home-loading {
+  display: grid;
+  min-height: 100vh;
+  align-content: center;
+  justify-items: center;
+  gap: 14px;
+  color: var(--color-text-muted);
+  font-size: 13px;
+}
+
+.home-loading p {
+  margin: 0;
+}
+
+.home-loading__spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--color-border);
+  border-top-color: var(--color-brand);
+  border-radius: 50%;
+  animation: home-spin 700ms linear infinite;
+}
+
+@keyframes home-spin {
+  to { transform: rotate(360deg); }
+}
