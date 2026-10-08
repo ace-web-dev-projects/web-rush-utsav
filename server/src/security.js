@@ -56,11 +56,12 @@ export async function verifyPassword(password, storedHash) {
   return timingSafeEqual(actualKey, expectedKey)
 }
 
-export function createTeamToken(teamId) {
+function createToken(subject, role) {
   const now = Math.floor(Date.now() / 1000)
   const header = encodeJson({ alg: 'HS256', typ: 'JWT' })
   const payload = encodeJson({
-    sub: String(teamId),
+    sub: String(subject),
+    role,
     iat: now,
     exp: now + tokenLifetimeSeconds,
   })
@@ -72,7 +73,15 @@ export function createTeamToken(teamId) {
   return `${unsignedToken}.${signature}`
 }
 
-export function readTeamToken(token) {
+export function createTeamToken(teamId) {
+  return createToken(teamId, 'team')
+}
+
+export function createAdminToken(adminId) {
+  return createToken(adminId, 'admin')
+}
+
+function readToken(token, expectedRole) {
   const parts = token.split('.')
   if (parts.length !== 3) return null
 
@@ -93,14 +102,28 @@ export function readTeamToken(token) {
       return null
     }
 
-    const teamId = Number(payload.sub)
+    const subjectId = Number(payload.sub)
     const now = Math.floor(Date.now() / 1000)
-    if (!Number.isSafeInteger(teamId) || teamId < 1 || !Number.isFinite(payload.exp) || payload.exp <= now) {
+    // Tokens issued before roles were added remain valid for team accounts only.
+    const roleMatches = payload.role === expectedRole ||
+      (expectedRole === 'team' && payload.role === undefined)
+    if (
+      !roleMatches || !Number.isSafeInteger(subjectId) || subjectId < 1 ||
+      !Number.isFinite(payload.exp) || payload.exp <= now
+    ) {
       return null
     }
 
-    return { teamId }
+    return expectedRole === 'team' ? { teamId: subjectId } : { adminId: subjectId }
   } catch {
     return null
   }
+}
+
+export function readTeamToken(token) {
+  return readToken(token, 'team')
+}
+
+export function readAdminToken(token) {
+  return readToken(token, 'admin')
 }
