@@ -4,8 +4,10 @@
 // Get a free hosted Postgres database in seconds: `npx create-db`
 
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  provider                = "prisma-client"
+  output                  = "../src/generated/prisma"
+  generatedFileExtension  = "ts"
+  importFileExtension     = "ts"
 }
 
 datasource db {
@@ -13,8 +15,9 @@ datasource db {
 }
 
 model Team {
-  id        Int      @id @default(autoincrement())
-  name      String
-  teamCode  String   @unique
-  createdAt DateTime @default(now())
+  id           Int      @id @default(autoincrement())
+  name         String
+  teamCode     String   @unique
+  passwordHash String?
+  createdAt    DateTime @default(now())
 }
