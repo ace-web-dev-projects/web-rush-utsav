@@ -7,7 +7,7 @@
   place-items: center;
   isolation: isolate;
   background:
-    radial-gradient(ellipse at 15% 10%, rgb(255 255 255 / 82%), transparent 38%),
+    radial-gradient(ellipse at 15% 10%, rgb(139 92 246 / 13%), transparent 38%),
     var(--color-background);
 }
 
@@ -15,7 +15,7 @@
   position: absolute;
   z-index: -1;
   inset: 0;
-  background-image: radial-gradient(rgb(24 33 31 / 8%) 0.7px, transparent 0.7px);
+  background-image: radial-gradient(rgb(245 245 245 / 10%) 0.7px, transparent 0.7px);
   background-size: 20px 20px;
   content: '';
   opacity: 0.28;
@@ -34,13 +34,13 @@
 .auth-page__glow--top {
   top: -230px;
   right: 8%;
-  background: rgb(240 100 53 / 13%);
+  background: rgb(139 92 246 / 22%);
 }
 
 .auth-page__glow--bottom {
   bottom: -260px;
   left: -100px;
-  background: rgb(39 111 97 / 10%);
+  background: rgb(34 211 238 / 16%);
 }
 
 .auth-shell {
@@ -73,7 +73,7 @@
   height: 38px;
   border-radius: 12px;
   background: var(--color-brand);
-  color: white;
+  color: var(--color-text);
   font-family: var(--font-display);
   font-size: 13px;
   font-weight: 900;
@@ -99,9 +99,9 @@
 
 .auth-card {
   padding: 46px 48px 30px;
-  border: 1px solid rgb(229 228 220 / 82%);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-large);
-  background: rgb(255 254 250 / 94%);
+  background: rgb(18 18 28 / 94%);
   box-shadow: var(--shadow-card);
   backdrop-filter: blur(16px);
 }
@@ -171,17 +171,17 @@
 }
 
 .form-field__input::placeholder {
-  color: #9aa19c;
+  color: rgb(245 245 245 / 42%);
 }
 
 .form-field__input:hover {
-  border-color: #c8ccc3;
+  border-color: rgb(245 245 245 / 32%);
 }
 
 .form-field__input:focus {
   border-color: var(--color-focus);
   outline: none;
-  box-shadow: 0 0 0 3px rgb(39 111 97 / 13%);
+  box-shadow: 0 0 0 3px rgb(34 211 238 / 18%);
 }
 
 .login-form__error {
@@ -204,7 +204,7 @@
   border: 0;
   border-radius: var(--radius-small);
   background: var(--color-brand);
-  color: white;
+  color: var(--color-text);
   font-size: 13px;
   font-weight: 750;
   transition: background 150ms ease, transform 150ms ease;
@@ -240,7 +240,7 @@
   width: 17px;
   height: 17px;
   flex: 0 0 auto;
-  border: 1px solid #c5ccc5;
+  border: 1px solid var(--color-border);
   border-radius: 50%;
   color: var(--color-text-muted);
   font-size: 10px;
@@ -275,7 +275,7 @@
   height: 6px;
   border-radius: 50%;
   background: var(--color-success);
-  box-shadow: 0 0 0 3px rgb(35 106 80 / 11%);
+  box-shadow: 0 0 0 3px rgb(34 211 238 / 16%);
 }
 
 @media (max-width: 520px) {

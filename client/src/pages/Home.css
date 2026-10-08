@@ -4,7 +4,7 @@
   flex-direction: column;
   padding: 32px max(24px, calc((100vw - var(--page-width)) / 2));
   background:
-    radial-gradient(ellipse at 80% 12%, rgb(240 100 53 / 10%), transparent 34%),
+    radial-gradient(ellipse at 80% 12%, rgb(139 92 246 / 14%), transparent 34%),
     var(--color-background);
 }
 
