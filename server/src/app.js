@@ -3,6 +3,7 @@ import express from 'express'
 import cors from 'cors'
 import authRouter from './routes/auth.js'
 import adminRouter from './routes/admin.js'
+import eventRouter from './routes/event.js'
 import { prisma } from './db.js'
 
 if (!process.env.DATABASE_URL) {
@@ -25,13 +26,14 @@ app.get('/api/health', (_req, res) => {
 
 app.use('/api/auth', authRouter)
 app.use('/api/admin', adminRouter)
+app.use('/api/event', eventRouter)
 
 app.use((error, _req, res, _next) => {
   console.error(error)
   res.status(500).json({ error: 'An unexpected server error occurred.' })
 })
 
-const server = app.listen(port, () => {
+const server = app.listen(port,'0.0.0.0', () => {
   console.log(`Web Rush API listening on port ${port}`)
 })
 

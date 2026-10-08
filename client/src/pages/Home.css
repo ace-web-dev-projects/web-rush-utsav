@@ -36,8 +36,8 @@
 
 .home-welcome {
   width: min(100%, 760px);
-  margin: auto;
-  padding: 64px 0;
+  margin: auto auto 24px;
+  padding: 48px 0 0;
 }
 
 .home-welcome h1 {
@@ -90,6 +90,105 @@
   color: var(--color-brand);
 }
 
+.team-event {
+  width: min(100%, 760px);
+  margin: 0 auto auto;
+  padding-bottom: 40px;
+}
+
+.team-event__waiting,
+.active-round {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-medium);
+  background: var(--color-surface);
+}
+
+.team-event__waiting {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 22px 24px;
+}
+
+.team-event__waiting-dot {
+  width: 9px;
+  height: 9px;
+  flex: 0 0 auto;
+  margin-top: 6px;
+  border-radius: 50%;
+  background: var(--color-highlight);
+  box-shadow: 0 0 0 5px rgb(250 204 21 / 12%);
+}
+
+.team-event__waiting h2,
+.active-round h2 {
+  margin: 0;
+  font-size: 17px;
+}
+
+.team-event__waiting p {
+  margin: 6px 0 0;
+  color: var(--color-text-muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.team-event__connection-error {
+  margin: 0 0 12px;
+  color: var(--color-error);
+  font-size: 12px;
+}
+
+.active-round {
+  overflow: hidden;
+}
+
+.active-round__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 24px;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface-raised);
+}
+
+.active-round__eyebrow,
+.active-round__content > span {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--color-accent);
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: 0.14em;
+}
+
+.active-round__indicator {
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: var(--color-primary-soft);
+  color: var(--color-primary-strong);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+}
+
+.active-round__content {
+  padding: 22px 24px 25px;
+}
+
+.active-round__content > span {
+  color: var(--color-text-muted);
+}
+
+.active-round__content p {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
 .home-loading {
   display: grid;
   min-height: 100vh;
@@ -115,4 +214,18 @@
 
 @keyframes home-spin {
   to { transform: rotate(360deg); }
+}
+
+@media (max-width: 520px) {
+  .home-welcome {
+    margin-bottom: 20px;
+    padding-top: 36px;
+  }
+
+  .team-event__waiting,
+  .active-round__header,
+  .active-round__content {
+    padding-right: 18px;
+    padding-left: 18px;
+  }
 }
