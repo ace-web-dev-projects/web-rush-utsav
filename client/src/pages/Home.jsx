@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react'
-import { Navigate, useNavigate } from 'react-router-dom'
-import BrandMark from '../components/BrandMark.jsx'
+import { Navigate } from 'react-router-dom'
+import TeamHeader from '../components/TeamHeader.jsx'
 import useEventState from '../hooks/useEventState.js'
 import { api, AUTH_TOKEN_KEY } from '../api.js'
 import './Home.css'
 
 function Home() {
-  const navigate = useNavigate()
   const [team, setTeam] = useState(null)
   const { eventState, error: eventStateError } = useEventState(Boolean(team))
   const [isCheckingSession, setIsCheckingSession] = useState(
@@ -29,12 +28,6 @@ function Home() {
       .finally(() => setIsCheckingSession(false))
   }, [])
 
-  function handleSignOut() {
-    localStorage.removeItem(AUTH_TOKEN_KEY)
-    setTeam(null)
-    navigate('/login', { replace: true })
-  }
-
   if (isCheckingSession) {
     return (
       <main className="home-loading" aria-live="polite">
@@ -48,12 +41,7 @@ function Home() {
 
   return (
     <main className="home-page">
-      <header className="home-header">
-        <BrandMark compact />
-        <button className="home-header__signout" type="button" onClick={handleSignOut}>
-          Sign out
-        </button>
-      </header>
+      <TeamHeader />
       <section className="home-welcome">
         <div className="eyebrow"><span className="eyebrow__dot" /> TEAM SPACE</div>
         <h1>Welcome, {team.name}.</h1>

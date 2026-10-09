@@ -12,6 +12,29 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 18px;
+}
+
+.team-nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 auto;
+}
+
+.team-nav__link {
+  padding: 9px 13px;
+  border-radius: 999px;
+  color: var(--color-text-muted);
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.team-nav__link:hover,
+.team-nav__link.is-active {
+  background: var(--color-primary-soft);
+  color: var(--color-primary-strong);
 }
 
 .brand-mark--compact .brand-mark__icon {

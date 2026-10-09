@@ -9,13 +9,15 @@ import { requireTeamAuth } from '../middleware/requireTeamAuth.js'
 const router = Router()
 const maxFileSize = 10 * 1024 * 1024
 
-function getRoundUploadsDirectory(round) {
-  return fileURLToPath(new URL(`../validation/round-${round}/uploads/`, import.meta.url))
+function getSubmissionDirectory(round, teamId, submissionId) {
+  return fileURLToPath(
+    new URL(`../validation/round-${round}/uploads/team-${teamId}/${submissionId}/`, import.meta.url),
+  )
 }
 
 const storage = multer.diskStorage({
   destination(req, _file, callback) {
-    const directory = getRoundUploadsDirectory(req.params.round)
+    const directory = getSubmissionDirectory(req.round, req.auth.teamId, req.submissionId)
     mkdir(directory, { recursive: true })
       .then(() => callback(null, directory))
       .catch(callback)
@@ -41,12 +43,13 @@ function validateRound(req, res, next) {
   }
 
   req.round = round
+  req.submissionId = randomUUID()
   return next()
 }
 
 function getSubmissionBody(req, res) {
   if (req.is('multipart/form-data')) {
-    if (typeof req.body.submission === 'string') {
+    if (typeof req.body?.submission === 'string') {
       try {
         const submission = JSON.parse(req.body.submission)
         if (submission === null || typeof submission !== 'object') {
@@ -80,9 +83,11 @@ router.post('/round/:round', requireTeamAuth, validateRound, receiveFiles, async
   try {
     let submissionFile = null
     if (submission !== null) {
-      submissionFile = `${randomUUID()}.json`
+      submissionFile = 'submission.json'
+      const directory = getSubmissionDirectory(req.round, req.auth.teamId, req.submissionId)
+      await mkdir(directory, { recursive: true })
       await writeFile(
-        path.join(getRoundUploadsDirectory(req.round), submissionFile),
+        path.join(directory, submissionFile),
         JSON.stringify({ teamId: req.auth.teamId, round: req.round, submission }, null, 2),
         'utf8',
       )
@@ -91,6 +96,7 @@ router.post('/round/:round', requireTeamAuth, validateRound, receiveFiles, async
     return res.status(202).json({
       message: 'Submission received.',
       round: req.round,
+      submissionId: req.submissionId,
       files: files.map((file) => ({
         originalName: file.originalname,
         storedName: file.filename,

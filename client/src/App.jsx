@@ -5,12 +5,14 @@ import AdminLogin from './pages/AdminLogin.jsx'
 import AdminHome from './pages/AdminHome.jsx'
 import AdminControl from './pages/AdminControl.jsx'
 import AdminTeams from './pages/AdminTeams.jsx'
+import Leaderboard from './pages/Leaderboard.jsx'
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/leaderboard" element={<Leaderboard />} />
         <Route path="/login" element={<Login />} />
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin" element={<AdminHome />}>

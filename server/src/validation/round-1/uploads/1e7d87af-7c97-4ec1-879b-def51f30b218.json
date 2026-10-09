@@ -1,0 +1,10 @@
+{
+  "teamId": 1,
+  "round": 1,
+  "submission": {
+    "answer": "example",
+    "data": {
+      "key": "value"
+    }
+  }
+}
