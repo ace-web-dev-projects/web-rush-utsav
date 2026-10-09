@@ -6,10 +6,10 @@ import { Router } from 'express'
 import multer from 'multer'
 import { prisma } from '../db.js'
 import { requireTeamAuth } from '../middleware/requireTeamAuth.js'
+import { validateRound5Answer } from '../validation/round-5/validate.js'
 
 const router = Router()
 const maxFileSize = 10 * 1024 * 1024
-const round5TotalPoints = 100
 
 function getSubmissionDirectory(round, teamId, submissionId) {
   return fileURLToPath(
@@ -37,53 +37,6 @@ const receiveFiles = multer({
   { name: 'file', maxCount: 1 },
   { name: 'files', maxCount: 10 },
 ])
-
-router.post('/round/5/answer', requireTeamAuth, async (req, res, next) => {
-  const { password } = req.body ?? {}
-  const correctPassword = process.env.ROUND_5_ANSWER
-
-  if (typeof password !== 'string' || password.length === 0) {
-    return res.status(400).json({ error: 'Provide the Round 5 password as a non-empty string.' })
-  }
-
-  if (typeof correctPassword !== 'string' || correctPassword.length === 0) {
-    return res.status(503).json({ error: 'Round 5 answer validation is not configured.' })
-  }
-
-  try {
-    const team = await prisma.team.findUnique({
-      where: { id: req.auth.teamId },
-      select: { id: true },
-    })
-    if (!team) return res.status(401).json({ error: 'The team account no longer exists.' })
-
-    const correctLetters = Array.from(correctPassword)
-    const submittedLetters = Array.from(password)
-    const matchedLetters = correctLetters.reduce(
-      (total, letter, index) => total + Number(submittedLetters[index] === letter),
-      0,
-    )
-    const percentage = (matchedLetters / correctLetters.length) * 100
-    const points = Math.round((matchedLetters / correctLetters.length) * round5TotalPoints)
-
-    const updatedTeam = await prisma.team.update({
-      where: { id: team.id },
-      data: { points: { increment: points } },
-      select: { points: true },
-    })
-
-    return res.json({
-      round: 5,
-      matchedLetters,
-      totalLetters: correctLetters.length,
-      percentage,
-      pointsAwarded: points,
-      totalPoints: updatedTeam.points,
-    })
-  } catch (error) {
-    return next(error)
-  }
-})
 
 function validateRound(req, res, next) {
   const round = Number(req.params.round)
@@ -129,6 +82,20 @@ router.post('/round/:round', requireTeamAuth, validateRound, receiveFiles, async
     return res.status(400).json({ error: 'Include a JSON submission or at least one file.' })
   }
 
+  let round5Score = null
+  if (req.round === 5) {
+    if (typeof submission?.password !== 'string' || submission.password.length === 0) {
+      return res.status(400).json({ error: 'Include the Round 5 answer in a password field.' })
+    }
+
+    const correctPassword = process.env.ROUND_5_ANSWER
+    if (typeof correctPassword !== 'string' || correctPassword.length === 0) {
+      return res.status(503).json({ error: 'Round 5 answer validation is not configured.' })
+    }
+
+    round5Score = validateRound5Answer(submission.password, correctPassword)
+  }
+
   try {
     let submissionFile = null
     if (submission !== null) {
@@ -142,7 +109,17 @@ router.post('/round/:round', requireTeamAuth, validateRound, receiveFiles, async
       )
     }
 
-    return res.status(202).json({
+    let totalPoints = null
+    if (round5Score) {
+      const updatedTeam = await prisma.team.update({
+        where: { id: req.auth.teamId },
+        data: { points: { increment: round5Score.pointsAwarded } },
+        select: { points: true },
+      })
+      totalPoints = updatedTeam.points
+    }
+
+    return res.status(round5Score ? 200 : 202).json({
       message: 'Submission received.',
       round: req.round,
       submissionId: req.submissionId,
@@ -153,6 +130,7 @@ router.post('/round/:round', requireTeamAuth, validateRound, receiveFiles, async
         mimeType: file.mimetype,
       })),
       submissionFile,
+      ...(round5Score ? { score: { ...round5Score, totalPoints } } : {}),
     })
   } catch (error) {
     return next(error)
