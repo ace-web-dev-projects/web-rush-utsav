@@ -4,6 +4,7 @@ import cors from 'cors'
 import authRouter from './routes/auth.js'
 import adminRouter from './routes/admin.js'
 import eventRouter from './routes/event.js'
+import submissionsRouter from './routes/submissions.js'
 import { prisma } from './db.js'
 
 if (!process.env.DATABASE_URL) {
@@ -27,6 +28,7 @@ app.get('/api/health', (_req, res) => {
 app.use('/api/auth', authRouter)
 app.use('/api/admin', adminRouter)
 app.use('/api/event', eventRouter)
+app.use('/api/submissions', submissionsRouter)
 
 app.use((error, _req, res, _next) => {
   console.error(error)
