@@ -143,6 +143,177 @@
   gap: 16px;
 }
 
+.admin-control-layout.has-round6-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 0.78fr);
+  align-items: start;
+  gap: 20px;
+}
+
+.has-round6-panel .round-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.round6-admin-panel {
+  display: grid;
+  gap: 16px;
+  padding: 18px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-medium);
+  background: var(--color-surface-raised);
+}
+
+.round6-admin-panel__buzz,
+.round6-admin-panel__settings,
+.round6-admin-panel__teams {
+  display: grid;
+  gap: 11px;
+}
+
+.round6-admin-panel__buzz {
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.round6-admin-panel__eyebrow {
+  color: var(--color-text-muted);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.round6-admin-panel__buzz > strong {
+  font-size: 19px;
+}
+
+.round6-admin-panel__buzz .admin-button {
+  justify-self: start;
+  padding: 0 11px;
+  font-size: 11px;
+}
+
+.round6-marking {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+}
+
+.round6-marking button {
+  min-height: 38px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-small);
+  background: var(--color-background);
+  color: var(--color-text-muted);
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.round6-marking button.is-selected {
+  border-color: var(--color-accent);
+  background: rgb(34 211 238 / 10%);
+  color: var(--color-accent);
+}
+
+.round6-marking button.is-selected.is-negative {
+  border-color: var(--color-error);
+  background: var(--color-error-background);
+  color: var(--color-error);
+}
+
+.round6-points-input {
+  display: grid;
+  gap: 6px;
+  color: var(--color-text-muted);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.round6-points-input input {
+  width: 100%;
+  min-height: 40px;
+  padding: 0 11px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-small);
+  background: var(--color-background);
+  color: var(--color-text);
+}
+
+.round6-admin-panel__team-heading,
+.round6-admin-panel__actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.round6-admin-panel__team-heading h2 {
+  margin: 4px 0 0;
+  font-size: 14px;
+}
+
+.round6-admin-panel__team-heading > span,
+.round6-admin-panel__actions > span {
+  color: var(--color-text-muted);
+  font-size: 10px;
+}
+
+.round6-team-grid {
+  display: grid;
+  gap: 7px;
+  max-height: 290px;
+  overflow-y: auto;
+}
+
+.round6-team-tile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  padding: 10px 11px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-small);
+  background: var(--color-surface);
+  cursor: pointer;
+}
+
+.round6-team-tile.is-selected {
+  border-color: var(--color-primary);
+  background: var(--color-primary-soft);
+}
+
+.round6-team-tile input {
+  accent-color: var(--color-primary-strong);
+}
+
+.round6-team-tile > span {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  min-width: 0;
+}
+
+.round6-team-tile strong {
+  overflow: hidden;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.round6-team-tile small {
+  color: var(--color-text-muted);
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.round6-admin-panel__actions {
+  align-items: stretch;
+  flex-direction: column;
+  padding-top: 11px;
+  border-top: 1px solid var(--color-border);
+}
+
 .round-tile {
   display: grid;
   min-height: 185px;
@@ -405,6 +576,14 @@
 }
 
 @media (max-width: 700px) {
+  .admin-control-layout.has-round6-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .has-round6-panel .round-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .round-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }

@@ -96,6 +96,43 @@ router.post('/control/round6/wrong-answer', requireAdminAuth, async (_req, res, 
   }
 })
 
+router.post('/control/round6/score', requireAdminAuth, async (req, res, next) => {
+  const { teamIds, points, marking } = req.body ?? {}
+  if (
+    !Array.isArray(teamIds) || teamIds.length === 0 ||
+    teamIds.some((id) => !Number.isSafeInteger(id) || id < 1) ||
+    !Number.isSafeInteger(points) || points < 1 ||
+    !['positive', 'negative'].includes(marking)
+  ) {
+    return res.status(400).json({ error: 'Choose teams, a positive whole-number points value, and positive or negative marking.' })
+  }
+
+  const uniqueTeamIds = [...new Set(teamIds)]
+  try {
+    const eventState = await prisma.eventState.findUnique({ where: { id: 1 } })
+    if (eventState?.status !== 'ACTIVE' || eventState.currentRound !== 6) {
+      return res.status(409).json({ error: 'Round 6 is not currently active.' })
+    }
+
+    const teams = await prisma.team.findMany({ where: { id: { in: uniqueTeamIds } }, select: { id: true } })
+    if (teams.length !== uniqueTeamIds.length) {
+      return res.status(404).json({ error: 'One or more selected teams could not be found.' })
+    }
+
+    const delta = marking === 'positive' ? points : -points
+    const updatedTeams = await prisma.$transaction(uniqueTeamIds.map((id) =>
+      prisma.team.update({
+        where: { id },
+        data: { points: { increment: delta } },
+        select: { id: true, name: true, points: true },
+      }),
+    ))
+    return res.json({ teams: updatedTeams, delta })
+  } catch (error) {
+    return next(error)
+  }
+})
+
 router.get('/teams', requireAdminAuth, async (_req, res, next) => {
   try {
     const teams = await prisma.team.findMany({
