@@ -297,6 +297,77 @@
   color: var(--color-text);
 }
 
+.admin-team-form {
+  margin-bottom: 36px;
+  padding: 22px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-medium);
+  background: var(--color-surface);
+}
+
+.admin-team-form h2,
+.admin-team-list-heading h2 {
+  margin: 0 0 18px;
+  font-size: 16px;
+}
+
+.admin-team-form__fields {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.admin-team-form__fields label {
+  display: grid;
+  gap: 7px;
+  color: var(--color-text-muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.admin-team-form__fields input {
+  width: 100%;
+  min-height: 42px;
+  padding: 0 11px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-small);
+  background: var(--color-background);
+  color: var(--color-text);
+}
+
+.admin-team-form__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.admin-team-form__footer p {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 12px;
+}
+
+.admin-team-list-heading {
+  margin-bottom: 16px;
+}
+
+.admin-team-list-heading h2 {
+  margin-bottom: 0;
+}
+
+.admin-button--danger {
+  border: 1px solid rgb(248 113 113 / 35%);
+  background: var(--color-error-background);
+  color: var(--color-error);
+}
+
+.admin-button--danger:hover:not(:disabled) {
+  background: var(--color-error);
+  color: var(--color-background);
+}
+
 .admin-status,
 .admin-empty {
   padding: 28px 0;
@@ -351,6 +422,10 @@
     flex: 1;
     width: auto;
   }
+
+  .admin-team-form__fields {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 480px) {
@@ -375,5 +450,10 @@
 
   .admin-confirm__actions button {
     flex: 1;
+  }
+
+  .admin-team-form__footer {
+    align-items: stretch;
+    flex-direction: column;
   }
 }

@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { prisma } from '../db.js'
 import { requireAdminAuth } from '../middleware/requireAdminAuth.js'
-import { createAdminToken } from '../security.js'
+import { createAdminToken, hashPassword } from '../security.js'
 
 const router = Router()
 
@@ -80,6 +80,49 @@ router.get('/teams', requireAdminAuth, async (_req, res, next) => {
     })
     return res.json({ teams })
   } catch (error) {
+    return next(error)
+  }
+})
+
+router.post('/teams', requireAdminAuth, async (req, res, next) => {
+  const { name, teamCode, password } = req.body ?? {}
+
+  if (
+    typeof name !== 'string' || !name.trim() || name.trim().length > 100 ||
+    typeof teamCode !== 'string' || !teamCode.trim() || teamCode.trim().length > 100 ||
+    typeof password !== 'string' || password.length < 8
+  ) {
+    return res.status(400).json({ error: 'Provide a team name and code (up to 100 characters) and a password of at least 8 characters.' })
+  }
+
+  try {
+    const passwordHash = await hashPassword(password)
+    const team = await prisma.team.create({
+      data: { name: name.trim(), teamCode: teamCode.trim(), passwordHash },
+      select: { id: true, name: true, teamCode: true, points: true },
+    })
+    return res.status(201).json({ team })
+  } catch (error) {
+    if (error?.code === 'P2002') {
+      return res.status(409).json({ error: 'That team code is already in use.' })
+    }
+    return next(error)
+  }
+})
+
+router.delete('/teams/:teamId', requireAdminAuth, async (req, res, next) => {
+  const teamId = Number(req.params.teamId)
+  if (!Number.isSafeInteger(teamId) || teamId < 1) {
+    return res.status(400).json({ error: 'Provide a valid team ID.' })
+  }
+
+  try {
+    await prisma.team.delete({ where: { id: teamId } })
+    return res.status(204).end()
+  } catch (error) {
+    if (error?.code === 'P2025') {
+      return res.status(404).json({ error: 'Team not found.' })
+    }
     return next(error)
   }
 })

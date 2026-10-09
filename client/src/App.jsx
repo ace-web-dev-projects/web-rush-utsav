@@ -5,6 +5,7 @@ import AdminLogin from './pages/AdminLogin.jsx'
 import AdminHome from './pages/AdminHome.jsx'
 import AdminControl from './pages/AdminControl.jsx'
 import AdminTeams from './pages/AdminTeams.jsx'
+import AdminTeamManagement from './pages/AdminTeamManagement.jsx'
 import Leaderboard from './pages/Leaderboard.jsx'
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path="/admin" element={<AdminHome />}>
           <Route index element={<AdminControl />} />
           <Route path="teams" element={<AdminTeams />} />
+          <Route path="manage-teams" element={<AdminTeamManagement />} />
           <Route path="*" element={<Navigate to="/admin" replace />} />
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />
