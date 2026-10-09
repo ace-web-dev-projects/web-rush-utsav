@@ -1,0 +1,8 @@
+{
+  "maxAttempts": 6,
+  "puzzles": [
+    { "id": "q1", "word": "python", "points": 3 },
+    { "id": "q2", "word": "code", "points": 3 },
+    { "id": "q3", "word": "debug", "points": 3 }
+  ]
+}

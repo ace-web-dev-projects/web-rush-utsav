@@ -27,6 +27,21 @@ model Team {
   passwordHash String?
   points       Int      @default(0)
   createdAt    DateTime @default(now())
+  round1PuzzleProgress Round1PuzzleProgress[]
+}
+
+model Round1PuzzleProgress {
+  id            Int       @id @default(autoincrement())
+  teamId        Int
+  puzzleId      String
+  word          String
+  guesses       Json      @default("[]")
+  attempts      Int       @default(0)
+  solvedAt      DateTime?
+  pointsAwarded Int       @default(0)
+  team          Team      @relation(fields: [teamId], references: [id], onDelete: Cascade)
+
+  @@unique([teamId, puzzleId])
 }
 
 model Admin {
