@@ -6,7 +6,7 @@ import { Router } from 'express'
 import multer from 'multer'
 import { prisma } from '../db.js'
 import { requireTeamAuth } from '../middleware/requireTeamAuth.js'
-import { validateRound5Answer } from '../validation/round-5/validate.js'
+import { loadRound5Answer, validateRound5Answer } from '../validation/round-5/validate.js'
 
 const router = Router()
 const maxFileSize = 10 * 1024 * 1024
@@ -88,8 +88,8 @@ router.post('/round/:round', requireTeamAuth, validateRound, receiveFiles, async
       return res.status(400).json({ error: 'Include the Round 5 answer in a password field.' })
     }
 
-    const correctPassword = process.env.ROUND_5_ANSWER
-    if (typeof correctPassword !== 'string' || correctPassword.length === 0) {
+    const correctPassword = await loadRound5Answer()
+    if (!correctPassword) {
       return res.status(503).json({ error: 'Round 5 answer validation is not configured.' })
     }
 

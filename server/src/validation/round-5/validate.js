@@ -1,4 +1,19 @@
+import { readFile } from 'node:fs/promises'
+import { fileURLToPath } from 'node:url'
+
 const totalPoints = 100
+const answerFile = fileURLToPath(new URL('./round_5_answer.json', import.meta.url))
+
+export async function loadRound5Answer() {
+  try {
+    const answerData = JSON.parse(await readFile(answerFile, 'utf8'))
+    return typeof answerData.password === 'string' && answerData.password.length > 0
+      ? answerData.password
+      : null
+  } catch {
+    return null
+  }
+}
 
 export function validateRound5Answer(submittedPassword, correctPassword) {
   const correctLetters = Array.from(correctPassword)
