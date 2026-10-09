@@ -62,11 +62,35 @@ router.put('/control/round', requireAdminAuth, async (req, res, next) => {
         ? { id: 1, currentRound: round, status: 'ACTIVE', startedAt: now, endedAt: null }
         : { id: 1, currentRound: round, status: 'ENDED', endedAt: now },
       update: action === 'start'
-        ? { currentRound: round, status: 'ACTIVE', startedAt: now, endedAt: null }
+        ? {
+            currentRound: round,
+            status: 'ACTIVE',
+            startedAt: now,
+            endedAt: null,
+            round6BuzzedTeamId: null,
+            round6BuzzedName: null,
+          }
         : { status: 'ENDED', endedAt: now },
     })
 
     return res.json({ eventState, message: `Round ${round} ${action === 'start' ? 'started' : 'stopped'}.` })
+  } catch (error) {
+    return next(error)
+  }
+})
+
+router.post('/control/round6/wrong-answer', requireAdminAuth, async (_req, res, next) => {
+  try {
+    const result = await prisma.eventState.updateMany({
+      where: { id: 1, status: 'ACTIVE', currentRound: 6 },
+      data: { round6BuzzedTeamId: null, round6BuzzedName: null },
+    })
+
+    if (result.count === 0) {
+      return res.status(409).json({ error: 'Round 6 is not currently active.' })
+    }
+
+    return res.json({ message: 'Buzzer reset. Teams can buzz in again.' })
   } catch (error) {
     return next(error)
   }

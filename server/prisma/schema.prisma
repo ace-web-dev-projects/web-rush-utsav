@@ -37,12 +37,14 @@ model Admin {
 }
 
 model EventState {
-  id           Int         @id @default(1)
-  currentRound Int?
-  status       EventStatus @default(NOT_STARTED)
-  startedAt    DateTime?
-  endedAt      DateTime?
-  updatedAt    DateTime    @updatedAt
+  id                 Int         @id @default(1)
+  currentRound       Int?
+  status             EventStatus @default(NOT_STARTED)
+  startedAt          DateTime?
+  endedAt            DateTime?
+  round6BuzzedTeamId Int?
+  round6BuzzedName   String?
+  updatedAt          DateTime    @updatedAt
 }
 
 
