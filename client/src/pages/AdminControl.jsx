@@ -8,6 +8,7 @@ function AdminControl() {
   const [isLoading, setIsLoading] = useState(true)
   const [selection, setSelection] = useState(null)
   const [isSaving, setIsSaving] = useState(false)
+  const [isResettingBuzzer, setIsResettingBuzzer] = useState(false)
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
 
@@ -39,6 +40,20 @@ function AdminControl() {
       setError(requestError.response?.data?.error || 'Could not update the round.')
     } finally {
       setIsSaving(false)
+    }
+  }
+
+  async function handleWrongAnswer() {
+    setIsResettingBuzzer(true)
+    setError('')
+    setMessage('')
+    try {
+      const { data } = await adminApi.post('/admin/control/round6/wrong-answer')
+      setMessage(data.message)
+    } catch (requestError) {
+      setError(requestError.response?.data?.error || 'Could not reset the buzzer.')
+    } finally {
+      setIsResettingBuzzer(false)
     }
   }
 
@@ -80,6 +95,15 @@ function AdminControl() {
           )
         })}
       </div>
+
+      {eventState?.status === 'ACTIVE' && eventState.currentRound === 6 && (
+        <div className="admin-confirm" role="group" aria-label="Round 6 buzzer controls">
+          <p>Wrong answer? Clear the current buzz so teams can buzz in again.</p>
+          <button className="admin-button" type="button" onClick={handleWrongAnswer} disabled={isResettingBuzzer}>
+            {isResettingBuzzer ? 'Resetting…' : 'Wrong answer'}
+          </button>
+        </div>
+      )}
 
       {selection && (
         <div className="admin-confirm" role="group" aria-label="Confirm round change">

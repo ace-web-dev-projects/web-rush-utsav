@@ -3,7 +3,15 @@ import { Navigate } from 'react-router-dom'
 import TeamHeader from '../components/TeamHeader.jsx'
 import useEventState from '../hooks/useEventState.js'
 import { api, AUTH_TOKEN_KEY } from '../api.js'
+import Round1 from '../rounds/Round1.jsx'
+import Round2 from '../rounds/Round2.jsx'
+import Round3 from '../rounds/Round3.jsx'
+import Round4 from '../rounds/Round4.jsx'
+import Round5 from '../rounds/Round5.jsx'
+import Round6 from '../rounds/Round6.jsx'
 import './Home.css'
+
+const roundPages = { 1: Round1, 2: Round2, 3: Round3, 4: Round4, 5: Round5 }
 
 function Home() {
   const [team, setTeam] = useState(null)
@@ -38,6 +46,7 @@ function Home() {
   }
 
   if (!team) return <Navigate to="/login" replace />
+  const RoundPage = roundPages[eventState?.currentRound]
 
   return (
     <main className="home-page">
@@ -56,7 +65,9 @@ function Home() {
         {eventState?.status === 'ACTIVE' &&
         Number.isInteger(eventState.currentRound) &&
         eventState.currentRound >= 1 && eventState.currentRound <= 6 ? (
-          <ActiveRound round={eventState.currentRound} />
+          eventState.currentRound === 6
+            ? <Round6 team={team} eventState={eventState} />
+            : RoundPage ? <RoundPage /> : <ActiveRound round={eventState.currentRound} />
         ) : (
           <div className="team-event__waiting">
             <span className="team-event__waiting-dot" aria-hidden="true" />
