@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "predev": "prisma generate",
     "dev": "nodemon src/app.js",
+    "prestart": "prisma generate",
     "start": "node src/app.js",
     "db:migrate:deploy": "prisma migrate deploy",
     "db:migrate": "prisma migrate dev",
