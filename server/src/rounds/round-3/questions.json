@@ -1,0 +1,11 @@
+{
+  "questions": [
+    {
+      "id": "sample-card",
+      "title": "Sample card",
+      "instructions": "Copy the starter code, make the page match the reference image, then upload your project files.",
+      "image": "/round3/images/sample-card.svg",
+      "code": "<article class=\"profile-card\">\n  <div class=\"avatar\">A</div>\n  <h1>Alex Morgan</h1>\n  <p>Frontend developer</p>\n  <button>Contact</button>\n</article>\n\n<style>\n  body { font-family: Arial, sans-serif; }\n  .profile-card { padding: 24px; }\n</style>"
+    }
+  ]
+}

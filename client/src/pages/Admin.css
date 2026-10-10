@@ -528,6 +528,21 @@
   margin-bottom: 0;
 }
 
+.round3-admin__eyebrow { color: var(--color-accent); font-size: 10px; font-weight: 850; letter-spacing: .14em; }
+.round3-admin__questions { display: grid; gap: 20px; }
+.round3-admin__question { padding: 20px; border: 1px solid var(--color-border); border-radius: var(--radius-medium); background: var(--color-surface); }
+.round3-admin__question-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.round3-admin__question-heading h2 { margin: 0; font-size: 16px; }
+.round3-admin__question-heading > span { color: var(--color-text-muted); font-size: 11px; white-space: nowrap; }
+.round3-admin__list { display: grid; gap: 10px; margin: 18px 0 0; padding: 0; list-style: none; counter-reset: submissions; }
+.round3-admin__submission { display: grid; grid-template-columns: minmax(120px, .7fr) minmax(160px, 1fr) minmax(180px, 1.4fr); align-items: start; gap: 14px; padding: 14px; border: 1px solid var(--color-border); border-radius: var(--radius-small); counter-increment: submissions; }
+.round3-admin__team { display: grid; gap: 4px; }
+.round3-admin__team strong { font-size: 13px; }
+.round3-admin__team span, .round3-admin__submission time, .round3-admin__files small { color: var(--color-text-muted); font-size: 10px; }
+.round3-admin__files { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.round3-admin__files li { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.round3-admin__files a { overflow-wrap: anywhere; color: var(--color-accent); font-size: 11px; }
+
 .admin-button--danger {
   border: 1px solid rgb(248 113 113 / 35%);
   background: var(--color-error-background);
@@ -592,6 +607,9 @@
     flex-wrap: wrap;
     gap: 16px;
   }
+
+  .round3-admin__submission { grid-template-columns: 1fr 1fr; }
+  .round3-admin__files { grid-column: 1 / -1; }
 
   .team-row__form {
     width: 100%;

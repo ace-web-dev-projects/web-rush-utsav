@@ -6,6 +6,7 @@ import AdminHome from './pages/AdminHome.jsx'
 import AdminControl from './pages/AdminControl.jsx'
 import AdminTeams from './pages/AdminTeams.jsx'
 import AdminTeamManagement from './pages/AdminTeamManagement.jsx'
+import AdminRound3Submissions from './pages/AdminRound3Submissions.jsx'
 import Leaderboard from './pages/Leaderboard.jsx'
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
           <Route index element={<AdminControl />} />
           <Route path="teams" element={<AdminTeams />} />
           <Route path="manage-teams" element={<AdminTeamManagement />} />
+          <Route path="round3-submissions" element={<AdminRound3Submissions />} />
           <Route path="*" element={<Navigate to="/admin" replace />} />
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />

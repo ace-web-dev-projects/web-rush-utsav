@@ -1,0 +1,16 @@
+{
+  "teamId": 3,
+  "round": 3,
+  "submittedAt": "2026-10-10T08:07:43.916Z",
+  "submission": {
+    "questionId": "sample-card"
+  },
+  "files": [
+    {
+      "originalName": "test.html",
+      "storedName": "dd5b5a34-2922-4338-b449-d60e5acdfbaf.html",
+      "size": 22962,
+      "mimeType": "text/html"
+    }
+  ]
+}

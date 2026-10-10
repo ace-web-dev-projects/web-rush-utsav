@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Northbridge University | Admissions Portal</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      background: #f4f6f9;
+      color: #172033;
+    }
+
+    .page {
+      min-height: 100vh;
+    }
+
+    /* Header */
+    header {
+      height: 64px;
+      background: #ffffff;
+      border-bottom: 1px solid #e3e7ed;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 42px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 265px;
+    }
+
+    .logo {
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      background: #183b70;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .brand-name {
+      font-size: 15px;
+      font-weight: 750;
+      color: #162b4d;
+      line-height: 1.1;
+    }
+
+    .brand-subtitle {
+      margin-top: 2px;
+      font-size: 10px;
+      color: #7b8494;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 27px;
+      height: 100%;
+    }
+
+    nav a {
+      color: #687386;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 600;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      border-bottom: 2px solid transparent;
+    }
+
+    nav a.active {
+      color: #183b70;
+      border-bottom-color: #183b70;
+    }
+
+    .account {
+      min-width: 215px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .account-info {
+      text-align: right;
+    }
+
+    .account-name {
+      font-size: 12px;
+      font-weight: 700;
+      color: #263246;
+    }
+
+    .account-role {
+      font-size: 10px;
+      color: #8992a1;
+      margin-top: 2px;
+    }
+
+    .account-dot {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #e9eef6;
+      color: #183b70;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    /* Main */
+    main {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 24px 30px 20px;
+    }
+
+    .heading-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 18px;
+    }
+
+    .eyebrow {
+      color: #61718a;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 25px;
+      letter-spacing: -.025em;
+      color: #16263f;
+    }
+
+    .heading-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .meta-box {
+      background: white;
+      border: 1px solid #e2e6ec;
+      border-radius: 8px;
+      padding: 8px 13px;
+      min-width: 100px;
+    }
+
+    .meta-label {
+      color: #8a93a1;
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      font-weight: 700;
+    }
+
+    .meta-value {
+      margin-top: 3px;
+      color: #26344a;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .progress-box {
+      min-width: 155px;
+    }
+
+    .progress-line {
+      margin-top: 5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .progress-track {
+      flex: 1;
+      height: 5px;
+      background: #e7ebf1;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      width: 85%;
+      height: 100%;
+      background: #2c669d;
+      border-radius: 20px;
+    }
+
+    .progress-percent {
+      color: #2c669d;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    /* Cards */
+    .cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid #e1e6ed;
+      border-radius: 12px;
+      box-shadow: 0 3px 12px rgba(27, 43, 67, 0.055);
+      overflow: hidden;
+    }
+
+    .card-header {
+      height: 49px;
+      padding: 0 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #edf0f4;
+    }
+
+    .card-title {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .card-icon {
+      width: 26px;
+      height: 26px;
+      border-radius: 7px;
+      background: #edf3fa;
+      color: #2d5c8e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .card-title h2 {
+      margin: 0;
+      font-size: 14px;
+      color: #23334c;
+    }
+
+    .card-label {
+      font-size: 9px;
+      color: #8b94a2;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      font-weight: 700;
+    }
+
+    .card-body {
+      padding: 16px 18px 17px;
+    }
+
+    .profile-layout {
+      display: grid;
+      grid-template-columns: 185px 1fr;
+      gap: 20px;
+    }
+
+    .image-frame {
+      width: 185px;
+      height: 218px;
+      border-radius: 9px;
+      overflow: hidden;
+      background: #e9edf2;
+      border: 1px solid #dfe4ea;
+    }
+
+    .image-frame img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .campus-frame {
+      width: 100%;
+      height: 139px;
+      border-radius: 9px;
+      overflow: hidden;
+      background: #e9edf2;
+      border: 1px solid #dfe4ea;
+      margin-bottom: 13px;
+    }
+
+    .campus-frame img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 17px;
+      row-gap: 13px;
+      align-content: start;
+    }
+
+    .profile-details {
+      padding-top: 2px;
+    }
+
+    .detail {
+      min-width: 0;
+    }
+
+    .detail.full {
+      grid-column: 1 / -1;
+    }
+
+    .detail-label {
+      font-size: 9px;
+      color: #8a94a3;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-bottom: 3px;
+    }
+
+    .detail-value {
+      font-size: 11px;
+      color: #2d3a4e;
+      font-weight: 650;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: #267052;
+      background: #eaf6f0;
+      border-radius: 20px;
+      padding: 4px 8px;
+      font-size: 9px;
+      font-weight: 750;
+    }
+
+    .status-dot {
+      width: 5px;
+      height: 5px;
+      background: #2c9168;
+      border-radius: 50%;
+    }
+
+    .campus-details {
+      row-gap: 11px;
+    }
+
+    /* Bottom information */
+    .info-strip {
+      margin-top: 18px;
+      background: white;
+      border: 1px solid #e1e6ed;
+      border-radius: 12px;
+      box-shadow: 0 3px 12px rgba(27, 43, 67, 0.045);
+      padding: 14px 18px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 18px;
+    }
+
+    .info-item {
+      padding-right: 17px;
+      border-right: 1px solid #edf0f3;
+    }
+
+    .info-item:last-child {
+      border-right: none;
+      padding-right: 0;
+    }
+
+    .info-label {
+      color: #8993a2;
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      font-weight: 700;
+    }
+
+    .info-value {
+      color: #26364e;
+      font-size: 13px;
+      font-weight: 750;
+      margin-top: 4px;
+    }
+
+    .info-sub {
+      color: #8a94a1;
+      font-size: 9px;
+      margin-top: 3px;
+    }
+
+    /* Timeline */
+    .timeline-card {
+      margin-top: 14px;
+      background: white;
+      border: 1px solid #e1e6ed;
+      border-radius: 12px;
+      padding: 13px 20px 14px;
+      box-shadow: 0 3px 12px rgba(27, 43, 67, 0.04);
+    }
+
+    .timeline-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 11px;
+    }
+
+    .timeline-heading strong {
+      font-size: 11px;
+      color: #344258;
+    }
+
+    .timeline-heading span {
+      font-size: 9px;
+      color: #8993a1;
+    }
+
+    .timeline {
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+
+    .step {
+      display: flex;
+      align-items: center;
+      flex: 1;
+    }
+
+    .step:last-child {
+      flex: 0 0 auto;
+    }
+
+    .step-circle {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid #d8dee7;
+      background: white;
+      color: #8993a1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .step.completed .step-circle {
+      background: #183b70;
+      border-color: #183b70;
+      color: white;
+    }
+
+    .step.current .step-circle {
+      border-color: #2d669d;
+      color: #2d669d;
+      box-shadow: 0 0 0 3px #e9f0f7;
+    }
+
+    .step-text {
+      margin-left: 7px;
+      white-space: nowrap;
+    }
+
+    .step-title {
+      font-size: 9px;
+      font-weight: 750;
+      color: #38465b;
+    }
+
+    .step-status {
+      font-size: 8px;
+      color: #929ba8;
+      margin-top: 1px;
+    }
+
+    .step-line {
+      height: 2px;
+      background: #dce2e9;
+      flex: 1;
+      margin: 0 12px;
+    }
+
+    .step-line.completed {
+      background: #183b70;
+    }
+
+    footer {
+      text-align: center;
+      color: #a0a7b2;
+      font-size: 8px;
+      padding: 12px 0 4px;
+    }
+
+    @media (max-width: 900px) {
+      header {
+        padding: 0 20px;
+      }
+
+      nav {
+        display: none;
+      }
+
+      .account {
+        min-width: auto;
+      }
+
+      main {
+        padding: 20px;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .info-strip {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+
+    <header>
+      <div class="brand">
+        <div class="logo">N</div>
+        <div>
+          <div class="brand-name">Northbridge University</div>
+          <div class="brand-subtitle">Admissions Portal</div>
+        </div>
+      </div>
+
+      <nav>
+        <a href="#">Dashboard</a>
+        <a href="#" class="active">Application</a>
+        <a href="#">Documents</a>
+        <a href="#">Profile</a>
+      </nav>
+
+      <div class="account">
+        <div class="account-info">
+          <div class="account-name">Applicant Account</div>
+          <div class="account-role">Undergraduate Admissions</div>
+        </div>
+        <div class="account-dot">AR</div>
+      </div>
+    </header>
+
+    <main>
+
+      <div class="heading-row">
+        <div>
+          <div class="eyebrow">2026 Undergraduate Admissions</div>
+          <h1>Undergraduate Admission Application</h1>
+        </div>
+
+        <div class="heading-meta">
+          <div class="meta-box">
+            <div class="meta-label">Application ID</div>
+            <div class="meta-value">NU-26-48172</div>
+          </div>
+
+          <div class="meta-box">
+            <div class="meta-label">Submitted</div>
+            <div class="meta-value">August 28, 2026</div>
+          </div>
+
+          <div class="meta-box progress-box">
+            <div class="meta-label">Application Progress</div>
+            <div class="progress-line">
+              <div class="progress-track">
+                <div class="progress-fill"></div>
+              </div>
+              <div class="progress-percent">85%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section class="cards">
+
+        <!-- Applicant Profile -->
+        <article class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-icon">AP</div>
+              <h2>Applicant Profile</h2>
+            </div>
+            <div class="card-label">Personal Information</div>
+          </div>
+
+          <div class="card-body">
+            <div class="profile-layout">
+
+              <div class="image-frame">
+                <img src="pexels.jpg" alt="Applicant photograph">
+              </div>
+
+              <div class="profile-details">
+                <div class="details">
+
+                  <div class="detail full">
+                    <div class="detail-label">Applicant Name</div>
+                    <div class="detail-value">James Bond</div>
+                  </div>
+
+                  <div class="detail">
+                    <div class="detail-label">Program</div>
+                    <div class="detail-value">B.Tech Computer Science</div>
+                  </div>
+
+                  <div class="detail">
+                    <div class="detail-label">Application ID</div>
+                    <div class="detail-value">NU-26-48172</div>
+                  </div>
+
+                  <div class="detail full">
+                    <div class="detail-label">Email</div>
+                    <div class="detail-value">example.@example.edu</div>
+                  </div>
+
+                  <div class="detail">
+                    <div class="detail-label">Application Status</div>
+                    <div class="status">
+                      <span class="status-dot"></span>
+                      Under Review
+                    </div>
+                  </div>
+
+                  <div class="detail">
+                    <div class="detail-label">Submission Date</div>
+                    <div class="detail-value">28 August 2026</div>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </article>
+
+        <!-- University Campus -->
+        <article class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-icon">NU</div>
+              <h2>University Campus</h2>
+            </div>
+            <div class="card-label">Application Destination</div>
+          </div>
+
+          <div class="card-body">
+
+            <div class="campus-frame">
+              <img src="campus.png" alt="University campus photograph">
+            </div>
+
+            <div class="details campus-details">
+
+              <div class="detail">
+                <div class="detail-label">Preferred Program</div>
+                <div class="detail-value">Computer Science & Engineering</div>
+              </div>
+
+              <div class="detail">
+                <div class="detail-label">Application Deadline</div>
+                <div class="detail-value">30 September 2026</div>
+              </div>
+
+              <div class="detail">
+                <div class="detail-label">Campus</div>
+                <div class="detail-value">Northbridge Main Campus</div>
+              </div>
+
+              <div class="detail">
+                <div class="detail-label">Review Status</div>
+                <div class="status">
+                  <span class="status-dot"></span>
+                  Faculty Review
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </article>
+
+      </section>
+
+      <!-- Admissions information -->
+      <section class="info-strip">
+
+        <div class="info-item">
+          <div class="info-label">Academic Score</div>
+          <div class="info-value">91.4 / 100</div>
+          <div class="info-sub">Academic record received</div>
+        </div>
+
+        <div class="info-item">
+          <div class="info-label">Application Review</div>
+          <div class="info-value">In Progress</div>
+          <div class="info-sub">Faculty assessment underway</div>
+        </div>
+
+        <div class="info-item">
+          <div class="info-label">Documents</div>
+          <div class="info-value">Verified</div>
+          <div class="info-sub">All required files accepted</div>
+        </div>
+
+        <div class="info-item">
+          <div class="info-label">Next Milestone</div>
+          <div class="info-value">Decision Review</div>
+          <div class="info-sub">Expected September 18, 2026</div>
+        </div>
+
+      </section>
+
+      <!-- Timeline -->
+      <section class="timeline-card">
+        <div class="timeline-heading">
+          <strong>Application Progress</strong>
+          <span>Current stage: Faculty Review</span>
+        </div>
+
+        <div class="timeline">
+
+          <div class="step completed">
+            <div class="step-circle">✓</div>
+            <div class="step-text">
+              <div class="step-title">Application</div>
+              <div class="step-status">Submitted</div>
+            </div>
+          </div>
+
+          <div class="step-line completed"></div>
+
+          <div class="step completed">
+            <div class="step-circle">✓</div>
+            <div class="step-text">
+              <div class="step-title">Documents</div>
+              <div class="step-status">Verified</div>
+            </div>
+          </div>
+
+          <div class="step-line completed"></div>
+
+          <div class="step current">
+            <div class="step-circle">3</div>
+            <div class="step-text">
+              <div class="step-title">Faculty Review</div>
+              <div class="step-status">In progress</div>
+            </div>
+          </div>
+
+          <div class="step-line"></div>
+
+          <div class="step">
+            <div class="step-circle">4</div>
+            <div class="step-text">
+              <div class="step-title">Decision</div>
+              <div class="step-status">Upcoming</div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <footer>
+        Northbridge University Admissions • 2026 Undergraduate Application Portal
+      </footer>
+
+    </main>
+  </div>
+</body>
+</html>

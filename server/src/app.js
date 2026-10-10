@@ -7,6 +7,7 @@ import eventRouter from './routes/event.js'
 import submissionsRouter from './routes/submissions.js'
 import round1Router from './routes/round1.js'
 import round2Router from './routes/round2.js'
+import round3Router from './routes/round3.js'
 import { prisma } from './db.js'
 
 if (!process.env.DATABASE_URL) {
@@ -32,6 +33,7 @@ app.use('/api/admin', adminRouter)
 app.use('/api/event', eventRouter)
 app.use('/api/round1', round1Router)
 app.use('/api/round2', round2Router)
+app.use('/api/round3', round3Router)
 app.use('/api/submissions', submissionsRouter)
 
 app.use((error, _req, res, _next) => {

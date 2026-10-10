@@ -61,6 +61,9 @@ function AdminHome() {
         <NavLink to="/admin/manage-teams" className={({ isActive }) => `admin-nav__link${isActive ? ' is-active' : ''}`}>
           Add / delete teams
         </NavLink>
+        <NavLink to="/admin/round3-submissions" className={({ isActive }) => `admin-nav__link${isActive ? ' is-active' : ''}`}>
+          Round 3 submissions
+        </NavLink>
       </nav>
       <section className="admin-content"><Outlet /></section>
     </main>
