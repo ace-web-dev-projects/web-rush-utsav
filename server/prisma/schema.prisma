@@ -25,9 +25,23 @@ model Team {
   name         String
   teamCode     String   @unique
   passwordHash String?
-  points       Int      @default(0)
+  points       Float    @default(0)
   createdAt    DateTime @default(now())
   round1PuzzleProgress Round1PuzzleProgress[]
+  round2QuestionProgress Round2QuestionProgress[]
+}
+
+model Round2QuestionProgress {
+  id            Int       @id @default(autoincrement())
+  teamId        Int
+  questionId    String
+  answer        String
+  attempts      Int       @default(0)
+  solvedAt      DateTime?
+  pointsAwarded Float     @default(0)
+  team          Team      @relation(fields: [teamId], references: [id], onDelete: Cascade)
+
+  @@unique([teamId, questionId])
 }
 
 model Round1PuzzleProgress {

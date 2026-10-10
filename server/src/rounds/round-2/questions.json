@@ -1,0 +1,7 @@
+{
+  "questions": [
+    {"id":"q1","answer":"test","points":10},
+    {"id":"q2","answer":"test","points":10},
+    {"id":"q3","answer":"test","points":10}
+  ]
+}
