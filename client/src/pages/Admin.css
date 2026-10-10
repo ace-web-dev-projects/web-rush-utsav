@@ -1,6 +1,6 @@
 .admin-page {
   min-height: 100vh;
-  padding: 28px max(22px, calc((100vw - var(--page-width)) / 2));
+  padding: 24px clamp(20px, 4vw, 64px);
   background:
     radial-gradient(ellipse at 82% 8%, rgb(139 92 246 / 12%), transparent 32%),
     var(--color-background);
@@ -100,12 +100,12 @@
 }
 
 .admin-content {
-  width: min(100%, 1020px);
+  width: min(100%, 1600px);
   margin: 0 auto;
 }
 
 .admin-section {
-  padding: 44px 0 64px;
+  padding: 34px 0 64px;
 }
 
 .admin-section__heading {
@@ -116,8 +116,8 @@
 .admin-section__heading h1 {
   margin: 13px 0 7px;
   font-family: var(--font-display);
-  font-size: clamp(34px, 6vw, 48px);
-  letter-spacing: -0.06em;
+  font-size: clamp(30px, 4vw, 42px);
+  letter-spacing: -0.035em;
 }
 
 .admin-section__heading p {
@@ -542,6 +542,17 @@
 .round3-admin__files { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; }
 .round3-admin__files li { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
 .round3-admin__files a { overflow-wrap: anywhere; color: var(--color-accent); font-size: 11px; }
+
+.admin-nav { margin-top: 24px; overflow-x: auto; }
+.admin-nav__link { white-space: nowrap; }
+.round-grid { gap: 18px; }
+.round-tile { min-height: 210px; padding: 26px; }
+.round-tile__name { font-size: 22px; }
+.round3-admin__question { padding: 24px; }
+.round3-admin__submission { grid-template-columns: minmax(180px, .7fr) minmax(220px, 1fr) minmax(280px, 1.5fr); padding: 18px; }
+.round3-admin__team strong { font-size: 15px; }
+.round3-admin__team span, .round3-admin__submission time, .round3-admin__files small { font-size: 12px; }
+.round3-admin__files a { font-size: 13px; }
 
 .admin-button--danger {
   border: 1px solid rgb(248 113 113 / 35%);

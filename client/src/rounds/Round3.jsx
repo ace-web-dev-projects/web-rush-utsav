@@ -80,8 +80,10 @@ function Round3() {
             <div className="round3__heading"><div><span>QUESTION {questions.indexOf(selected) + 1}</span><h3>{selected.title}</h3></div></div>
             <p className="round3__instructions">{selected.instructions}</p>
             <img className="round3__reference" src={selected.image} alt={`Reference design for ${selected.title}`} />
-            <div className="round3__code-heading"><strong>Starter code</strong><button type="button" onClick={copyCode}>Copy code</button></div>
-            <pre className="round3__code"><code>{selected.code}</code></pre>
+            <div className="round3__code-panel">
+              <div className="round3__code-heading"><strong>Starter code</strong><button type="button" onClick={copyCode}>Copy code</button></div>
+              <pre className="round3__code"><code>{selected.code}</code></pre>
+            </div>
             <form className="round3__upload" onSubmit={submitFiles}>
               <label htmlFor={`round3-files-${selected.id}`}>Upload your finished files</label>
               <p>Choose up to 10 files. Each file can be up to 10 MB.</p>
