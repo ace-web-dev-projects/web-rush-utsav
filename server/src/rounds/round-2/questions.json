@@ -7,13 +7,13 @@
     {"id":"q5","answer":"database","points":6},
     {"id":"q6","answer":"DOM","points":6},
     {"id":"q7","answer":"api","points":6},
-    {"id":"q8","answer":"webcomponent","points":6},
+    {"id":"q8","answer":"client","points":6},
     {"id":"q9","answer":"typescript","points":6},
-    {"id":"q10","answer":"client-server","points":6},
+    {"id":"q10","answer":"server","points":6},
     {"id":"q11","answer":"SPA","points":6},
     {"id":"q12","answer":"debounce","points":6},
     {"id":"q13","answer":"monolith","points":6},
-    {"id":"q14","answer":"rate limiting","points":6},
-    {"id":"q15","answer":"cascade delete","points":6}
+    {"id":"q14","answer":"localstorage","points":6},
+    {"id":"q15","answer":"cascade_delete","points":6}
   ]
 }
