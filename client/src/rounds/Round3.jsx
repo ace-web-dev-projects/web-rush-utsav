@@ -10,7 +10,17 @@ function Round3() {
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState('')
   const [message, setMessage] = useState('')
+  const [showFullImage, setShowFullImage] = useState(false)
   const selected = questions.find((question) => question.id === selectedId)
+
+  useEffect(() => {
+    if (!showFullImage) return undefined
+    function closeOnEscape(event) {
+      if (event.key === 'Escape') setShowFullImage(false)
+    }
+    window.addEventListener('keydown', closeOnEscape)
+    return () => window.removeEventListener('keydown', closeOnEscape)
+  }, [showFullImage])
 
   useEffect(() => {
     let mounted = true
@@ -23,6 +33,7 @@ function Round3() {
 
   function selectQuestion(id) {
     setSelectedId(id)
+    setShowFullImage(false)
     setFiles([])
     setError('')
     setMessage('')
@@ -79,7 +90,10 @@ function Round3() {
           {selected && <section className="round3__question" aria-live="polite">
             <div className="round3__heading"><div><span>QUESTION {questions.indexOf(selected) + 1}</span><h3>{selected.title}</h3></div></div>
             <p className="round3__instructions">{selected.instructions}</p>
-            <img className="round3__reference" src={selected.image} alt={`Reference design for ${selected.title}`} />
+            <button className="round3__reference-button" type="button" onClick={() => setShowFullImage(true)} aria-label={`View full-size reference image for ${selected.title}`}>
+              <img className="round3__reference" src={selected.image} alt={`Reference design for ${selected.title}`} />
+              <span>Click to view full image</span>
+            </button>
             <div className="round3__code-panel">
               <div className="round3__code-heading"><strong>Starter code</strong><button type="button" onClick={copyCode}>Copy code</button></div>
               <pre className="round3__code"><code>{selected.code}</code></pre>
@@ -94,6 +108,14 @@ function Round3() {
             {message && <p className="round3__feedback" role="status">{message}</p>}
             {error && <p className="round3__error" role="alert">{error}</p>}
           </section>}
+        </div>
+      )}
+      {showFullImage && selected && (
+        <div className="round3__lightbox" onClick={() => setShowFullImage(false)}>
+          <section className="round3__lightbox-dialog" role="dialog" aria-modal="true" aria-label={`Full-size reference image for ${selected.title}`} onClick={(event) => event.stopPropagation()}>
+            <button className="round3__lightbox-close" type="button" onClick={() => setShowFullImage(false)} autoFocus>Close</button>
+            <img src={selected.image} alt={`Full-size reference design for ${selected.title}`} />
+          </section>
         </div>
       )}
     </article>
