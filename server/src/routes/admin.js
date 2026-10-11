@@ -146,20 +146,19 @@ router.get('/teams', requireAdminAuth, async (_req, res, next) => {
 })
 
 router.post('/teams', requireAdminAuth, async (req, res, next) => {
-  const { name, teamCode, password } = req.body ?? {}
+  const { teamCode, password } = req.body ?? {}
 
   if (
-    typeof name !== 'string' || !name.trim() || name.trim().length > 100 ||
     typeof teamCode !== 'string' || !teamCode.trim() || teamCode.trim().length > 100 ||
     typeof password !== 'string' || password.length < 8
   ) {
-    return res.status(400).json({ error: 'Provide a team name and code (up to 100 characters) and a password of at least 8 characters.' })
+    return res.status(400).json({ error: 'Provide a team code (up to 100 characters) and a password of at least 8 characters.' })
   }
 
   try {
     const passwordHash = await hashPassword(password)
     const team = await prisma.team.create({
-      data: { name: name.trim(), teamCode: teamCode.trim(), passwordHash },
+      data: { teamCode: teamCode.trim(), passwordHash },
       select: { id: true, name: true, teamCode: true, points: true },
     })
     return res.status(201).json({ team })

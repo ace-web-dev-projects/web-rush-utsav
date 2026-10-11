@@ -7,6 +7,8 @@ import { requireTeamAuth } from '../middleware/requireTeamAuth.js'
 const router = Router()
 const questionsFile = fileURLToPath(new URL('../rounds/round-2/questions.json', import.meta.url))
 const maxAttempts = 2
+const firstAttemptPoints = 6
+const secondAttemptPoints = 4
 
 async function loadQuestionSet() {
   try {
@@ -62,8 +64,8 @@ router.get('/questions', requireTeamAuth, async (req, res, next) => {
     const questions = await loadQuestionSet()
     if (!questions) return res.status(503).json({ error: 'Round 2 questions are not configured correctly.' })
     const progress = await prepareProgress(req.auth.teamId, questions)
-    return res.json({ questions: questions.map(({ id, points }) => ({
-      id, points, progress: publicProgress(progress.find((item) => item.questionId === id)),
+    return res.json({ questions: questions.map(({ id }) => ({
+      id, points: firstAttemptPoints, progress: publicProgress(progress.find((item) => item.questionId === id)),
     })) })
   } catch (error) { return next(error) }
 })
@@ -86,7 +88,7 @@ router.post('/submit', requireTeamAuth, async (req, res, next) => {
     }
 
     const correct = answer.trim().toLowerCase() === question.answer
-    const pointsAwarded = correct ? (progress.attempts === 0 ? question.points : question.points / 2) : 0
+    const pointsAwarded = correct ? (progress.attempts === 0 ? firstAttemptPoints : secondAttemptPoints) : 0
     const updated = await prisma.$transaction(async (tx) => {
       const changed = await tx.round2QuestionProgress.updateMany({
         where: { id: progress.id, attempts: progress.attempts, solvedAt: null },

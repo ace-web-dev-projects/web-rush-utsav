@@ -163,7 +163,7 @@ function AdminControl() {
               {teams.map((team) => (
                 <label className={`round6-team-tile${selectedTeamIds.includes(team.id) ? ' is-selected' : ''}`} key={team.id}>
                   <input type="checkbox" checked={selectedTeamIds.includes(team.id)} onChange={() => toggleTeam(team.id)} />
-                  <span><strong>{team.name}</strong><small>{team.points} pts</small></span>
+                  <span><strong>{team.name || `Name pending (${team.teamCode})`}</strong><small>{team.points} pts</small></span>
                 </label>
               ))}
             </div>

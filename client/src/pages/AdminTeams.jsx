@@ -36,7 +36,7 @@ function AdminTeams() {
       const { data } = await adminApi.patch(`/admin/teams/${teamId}/points`, { delta })
       setTeams((current) => current.map((team) => team.id === teamId ? data.team : team))
       setChanges((current) => ({ ...current, [teamId]: '' }))
-      setMessage(`${data.team.name}: ${delta > 0 ? '+' : ''}${delta} points.`)
+      setMessage(`${data.team.name || data.team.teamCode}: ${delta > 0 ? '+' : ''}${delta} points.`)
     } catch (requestError) {
       setError(requestError.response?.data?.error || 'Could not update team points.')
     } finally {
@@ -64,7 +64,7 @@ function AdminTeams() {
           {teams.map((team) => (
             <article className="team-row" key={team.id}>
               <div className="team-row__identity">
-                <h2>{team.name}</h2>
+                <h2>{team.name || `Name pending (${team.teamCode})`}</h2>
                 <span>Code: {team.teamCode}</span>
               </div>
               <div className="team-row__score">
@@ -72,7 +72,7 @@ function AdminTeams() {
                 <strong>{team.points}</strong>
               </div>
               <form className="team-row__form" onSubmit={(event) => handlePointsSubmit(event, team.id)}>
-                <label className="visually-hidden" htmlFor={`points-${team.id}`}>Points to add or subtract for {team.name}</label>
+                <label className="visually-hidden" htmlFor={`points-${team.id}`}>Points to add or subtract for {team.name || team.teamCode}</label>
                 <input
                   id={`points-${team.id}`}
                   type="number"

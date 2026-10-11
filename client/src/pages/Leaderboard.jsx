@@ -76,6 +76,7 @@ function Leaderboard() {
   }
 
   if (!team) return <Navigate to="/login" replace />
+  if (!team.name?.trim()) return <Navigate to="/team-name" replace />
 
   return (
     <main className="home-page leaderboard-page">

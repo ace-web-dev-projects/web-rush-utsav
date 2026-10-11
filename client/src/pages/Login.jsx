@@ -20,7 +20,7 @@ function Login() {
     try {
       const response = await api.post('/auth/login', { teamCode, password })
       localStorage.setItem(AUTH_TOKEN_KEY, response.data.token)
-      navigate('/', { replace: true })
+      navigate(response.data.team.name?.trim() ? '/' : '/team-name', { replace: true })
     } catch (requestError) {
       setError(
         requestError.response?.data?.error ||

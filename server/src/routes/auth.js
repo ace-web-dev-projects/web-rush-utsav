@@ -73,6 +73,30 @@ router.post('/login', async (req, res, next) => {
   }
 })
 
+router.post('/team-name', requireTeamAuth, async (req, res, next) => {
+  const { name } = req.body ?? {}
+  if (typeof name !== 'string' || !name.trim() || name.trim().length > 100) {
+    return res.status(400).json({ error: 'Enter a team name up to 100 characters.' })
+  }
+
+  try {
+    const current = await prisma.team.findUnique({ where: { id: req.auth.teamId } })
+    if (!current) return res.status(401).json({ error: 'The token is invalid or expired.' })
+    if (current.name?.trim()) return res.status(409).json({ error: 'The team name has already been set.' })
+
+    const changed = await prisma.team.updateMany({
+      where: { id: current.id, name: current.name },
+      data: { name: name.trim() },
+    })
+    if (!changed.count) return res.status(409).json({ error: 'The team name has already been set.' })
+
+    const team = await prisma.team.findUnique({ where: { id: current.id } })
+    return res.json({ team: publicTeam(team) })
+  } catch (error) {
+    return next(error)
+  }
+})
+
 router.get('/me', requireTeamAuth, async (req, res, next) => {
   try {
     const team = await prisma.team.findUnique({ where: { id: req.auth.teamId } })

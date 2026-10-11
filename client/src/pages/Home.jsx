@@ -46,6 +46,7 @@ function Home() {
   }
 
   if (!team) return <Navigate to="/login" replace />
+  if (!team.name?.trim()) return <Navigate to="/team-name" replace />
   const RoundPage = roundPages[eventState?.currentRound]
 
   return (

@@ -40,7 +40,7 @@ router.post('/round6/buzz', requireTeamAuth, async (req, res, next) => {
         currentRound: 6,
         round6BuzzedTeamId: null,
       },
-      data: { round6BuzzedTeamId: team.id, round6BuzzedName: team.name },
+      data: { round6BuzzedTeamId: team.id, round6BuzzedName: team.name || team.teamCode },
     })
 
     const eventState = await prisma.eventState.findUnique({
@@ -64,7 +64,7 @@ router.post('/round6/buzz', requireTeamAuth, async (req, res, next) => {
 router.get('/leaderboard', requireTeamAuth, async (_req, res, next) => {
   try {
     const teams = await prisma.team.findMany({
-      select: { id: true, name: true, points: true },
+      select: { id: true, name: true, teamCode: true, points: true },
       orderBy: [{ points: 'desc' }, { name: 'asc' }],
     })
 
@@ -73,7 +73,7 @@ router.get('/leaderboard', requireTeamAuth, async (_req, res, next) => {
     const leaderboard = teams.map((team, index) => {
       if (team.points !== previousPoints) currentRank = index + 1
       previousPoints = team.points
-      return { rank: currentRank, id: team.id, name: team.name, points: team.points }
+      return { rank: currentRank, id: team.id, name: team.name || team.teamCode, points: team.points }
     })
 
     return res.json({ leaderboard })

@@ -79,10 +79,10 @@ function Round2() {
           </nav>
           {selected && <section className="round2__question" aria-live="polite">
             <div className="round2__heading"><div><span>QUESTION {questions.findIndex((question) => question.id === selected.id) + 1}</span><h3>Study the pictures</h3></div><strong>{selected.points} PTS</strong></div>
-            <p className="round2__hint">Use the pictures to work out the answer. A correct answer on your second try earns half points.</p>
+            <p className="round2__hint">Use the pictures to work out the answer. Earn 6 points on your first try or 4 points on your second try.</p>
             <div className="round2__images" aria-label={`Picture clues for question ${questions.findIndex((question) => question.id === selected.id) + 1}`}>
               {[1, 2, 3, 4].map((imageNumber) => (
-                <img key={imageNumber} src={`/round2/${selected.id}-${imageNumber}.jpg`}
+                <img key={imageNumber} src={`/round2/${selected.id}-${imageNumber}.png`}
                   alt={`Clue ${imageNumber}`} onError={(event) => { event.currentTarget.hidden = true }} />
               ))}
             </div>

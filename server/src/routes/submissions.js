@@ -172,7 +172,7 @@ router.get('/admin/round/3', requireAdminAuth, async (_req, res, next) => {
           if (!submissionsByQuestion[questionId]) continue
           const team = await prisma.team.findUnique({ where: { id: teamId }, select: { name: true, teamCode: true } })
           if (!team) continue
-          submissionsByQuestion[questionId].push({ teamId, teamName: team.name, teamCode: team.teamCode,
+          submissionsByQuestion[questionId].push({ teamId, teamName: team.name || team.teamCode, teamCode: team.teamCode,
             submissionId: submissionDirectory.name, submittedAt: metadata.submittedAt,
             files: (metadata.files ?? []).map(({ originalName, storedName, size, mimeType }) => ({ originalName, storedName, size, mimeType })) })
         } catch (error) { if (error.code !== 'ENOENT' && !(error instanceof SyntaxError)) throw error }

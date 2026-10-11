@@ -1,6 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import Home from './pages/Home.jsx'
 import Login from './pages/Login.jsx'
+import SetTeamName from './pages/SetTeamName.jsx'
 import AdminLogin from './pages/AdminLogin.jsx'
 import AdminHome from './pages/AdminHome.jsx'
 import AdminControl from './pages/AdminControl.jsx'
@@ -16,6 +17,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/leaderboard" element={<Leaderboard />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/team-name" element={<SetTeamName />} />
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin" element={<AdminHome />}>
           <Route index element={<AdminControl />} />

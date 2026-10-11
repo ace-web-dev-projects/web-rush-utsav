@@ -22,7 +22,7 @@ enum EventStatus {
 
 model Team {
   id           Int      @id @default(autoincrement())
-  name         String
+  name         String?
   teamCode     String   @unique
   passwordHash String?
   points       Float    @default(0)
