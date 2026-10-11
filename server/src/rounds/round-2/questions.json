@@ -1,7 +1,19 @@
 {
   "questions": [
-    {"id":"q1","answer":"test","points":6},
-    {"id":"q2","answer":"test","points":6},
-    {"id":"q3","answer":"test","points":6}
+    {"id":"q1","answer":"html","points":6},
+    {"id":"q2","answer":"css","points":6},
+    {"id":"q3","answer":"react","points":6},
+    {"id":"q4","answer":"javascript","points":6},
+    {"id":"q5","answer":"database","points":6},
+    {"id":"q6","answer":"DOM","points":6},
+    {"id":"q7","answer":"api","points":6},
+    {"id":"q8","answer":"webcomponent","points":6},
+    {"id":"q9","answer":"typescript","points":6},
+    {"id":"q10","answer":"client-server","points":6},
+    {"id":"q11","answer":"SPA","points":6},
+    {"id":"q12","answer":"debounce","points":6},
+    {"id":"q13","answer":"monolith","points":6},
+    {"id":"q14","answer":"rate limiting","points":6},
+    {"id":"q15","answer":"cascade delete","points":6}
   ]
 }
